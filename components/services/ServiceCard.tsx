@@ -1,14 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
-import { LucideIcon } from "lucide-react";
+import { ArrowUpRight, LucideIcon } from "lucide-react";
 
 interface ServiceCardProps {
   icon: LucideIcon;
   title: string;
   description: string;
   index: number;
+  onClick: () => void;
 }
 
 export default function ServiceCard({
@@ -16,12 +16,13 @@ export default function ServiceCard({
   title,
   description,
   index,
+  onClick,
 }: ServiceCardProps) {
   return (
     <motion.article
       initial={{
         opacity: 0,
-        y: 30,
+        y: 40,
       }}
       whileInView={{
         opacity: 1,
@@ -29,15 +30,17 @@ export default function ServiceCard({
       }}
       viewport={{ once: true }}
       transition={{
-        delay: index * 0.1,
-        duration: 0.5,
+        duration: 0.6,
+        delay: index * 0.12,
       }}
       whileHover={{
-        y: -8,
+        y: -10,
       }}
+      onClick={onClick}
       className="
         group
         relative
+        cursor-pointer
         overflow-hidden
         rounded-3xl
         border
@@ -46,35 +49,43 @@ export default function ServiceCard({
         p-8
         backdrop-blur-xl
         transition-all
-        duration-300
+        duration-500
         hover:border-blue-500/40
         hover:bg-white/10
       "
     >
       {/* Glow */}
 
+      <div className="absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100">
+        <div className="absolute -right-20 -top-20 h-60 w-60 rounded-full bg-blue-500/20 blur-3xl" />
+      </div>
+
+      {/* View Service */}
+
       <div
         className="
           absolute
-          inset-0
+          right-6
+          top-6
+          flex
+          items-center
+          gap-2
+          rounded-full
+          bg-white/10
+          px-4
+          py-2
+          text-sm
+          text-white
+          backdrop-blur-xl
           opacity-0
-          transition-opacity
-          duration-500
+          transition-all
+          duration-300
           group-hover:opacity-100
         "
       >
-        <div
-          className="
-            absolute
-            -right-24
-            -top-24
-            h-56
-            w-56
-            rounded-full
-            bg-blue-500/10
-            blur-3xl
-          "
-        />
+        View Service
+
+        <ArrowUpRight className="h-4 w-4" />
       </div>
 
       {/* Icon */}
@@ -94,7 +105,7 @@ export default function ServiceCard({
           group-hover:bg-blue-500/20
         "
       >
-        <Icon className="h-7 w-7" />
+        <Icon className="h-8 w-8" />
       </div>
 
       {/* Content */}
@@ -105,7 +116,7 @@ export default function ServiceCard({
           {title}
         </h3>
 
-        <p className="mt-4 leading-7 text-slate-400">
+        <p className="mt-5 leading-7 text-slate-400">
           {description}
         </p>
 
@@ -113,57 +124,28 @@ export default function ServiceCard({
 
       {/* Footer */}
 
-      <div
-        className="
-          relative
-          z-10
-          mt-8
-          flex
-          items-center
-          justify-between
-        "
-      >
-        <span
-          className="
-            text-sm
-            font-medium
-            text-blue-400
-          "
-        >
-          Learn More
+      <div className="relative z-10 mt-10 flex items-center justify-between border-t border-white/10 pt-6">
+
+        <span className="text-sm text-slate-500">
+          Click to explore
         </span>
 
-        <ArrowUpRight
+        <div
           className="
-            h-5
-            w-5
-            text-slate-500
-            transition-all
+            rounded-full
+            bg-blue-500
+            p-3
+            text-white
+            transition-transform
             duration-300
-            group-hover:text-blue-400
-            group-hover:translate-x-1
-            group-hover:-translate-y-1
+            group-hover:rotate-45
           "
-        />
+        >
+          <ArrowUpRight className="h-4 w-4" />
+        </div>
+
       </div>
 
-      {/* Bottom Accent */}
-
-      <div
-        className="
-          absolute
-          bottom-0
-          left-0
-          h-1
-          w-0
-          'bg-gradient-to-r'
-          from-blue-500
-          to-cyan-400
-          transition-all
-          duration-500
-          group-hover:w-full
-        "
-      />
     </motion.article>
   );
 }

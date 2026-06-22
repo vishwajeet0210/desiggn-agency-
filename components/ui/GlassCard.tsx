@@ -1,21 +1,21 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
-import type { ReactNode } from "react";
 
 interface GlassCardProps {
   children: ReactNode;
   className?: string;
-  hover?: boolean;
   delay?: number;
+  hover?: boolean;
 }
 
 export default function GlassCard({
   children,
   className,
-  hover = true,
   delay = 0,
+  hover = true,
 }: GlassCardProps) {
   return (
     <motion.div
@@ -32,7 +32,14 @@ export default function GlassCard({
         duration: 0.5,
         delay,
       }}
-      whileHover={hover ? { y: -8 } : undefined}
+      whileHover={
+        hover
+          ? {
+              y: -6,
+              scale: 1.02,
+            }
+          : undefined
+      }
       className={cn(
         `
         relative
@@ -41,9 +48,9 @@ export default function GlassCard({
         border
         border-white/10
         bg-white/5
-        backdrop-blur-xl
+        backdrop-blur-2xl
         transition-all
-        duration-300
+        duration-500
         hover:border-blue-500/40
         hover:bg-white/10
         `,
@@ -54,7 +61,6 @@ export default function GlassCard({
 
       <div
         className="
-          pointer-events-none
           absolute
           inset-0
           opacity-0
@@ -66,10 +72,11 @@ export default function GlassCard({
         <div
           className="
             absolute
-            -right-24
-            -top-24
-            h-56
-            w-56
+            left-1/2
+            top-0
+            h-64
+            w-64
+            -translate-x-1/2
             rounded-full
             bg-blue-500/10
             blur-3xl

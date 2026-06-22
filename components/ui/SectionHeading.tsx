@@ -1,49 +1,99 @@
 "use client";
 
 import { motion } from "framer-motion";
-import SectionBadge from "./SectionBadge";
+import { Sparkles } from "lucide-react";
 
-interface SectionHeadingProps {
+interface SectionHeaderProps {
   badge: string;
   title: string;
+  gradient: string;
   description: string;
-  gradient?: string;
-  align?: "left" | "center";
+  center?: boolean;
 }
 
-export default function SectionHeading({
+export default function SectionHeader({
   badge,
   title,
-  description,
   gradient,
-  align = "center",
-}: SectionHeadingProps) {
-  const alignment =
-    align === "center"
-      ? "mx-auto max-w-3xl text-center"
-      : "max-w-2xl";
-
+  description,
+  center = true,
+}: SectionHeaderProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
-      className={alignment}
+      initial={{
+        opacity: 0,
+        y: 30,
+      }}
+      whileInView={{
+        opacity: 1,
+        y: 0,
+      }}
+      viewport={{
+        once: true,
+      }}
+      transition={{
+        duration: 0.6,
+      }}
+      className={`mx-auto max-w-3xl ${
+        center ? "text-center" : ""
+      }`}
     >
-      <SectionBadge>{badge}</SectionBadge>
+      {/* Badge */}
 
-      <h2 className="mt-6 text-4xl font-black leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
+      <div
+        className="
+          mb-6
+          inline-flex
+          items-center
+          gap-2
+          rounded-full
+          border
+          border-blue-500/20
+          bg-blue-500/10
+          px-4
+          py-2
+          backdrop-blur-xl
+        "
+      >
+        <Sparkles className="h-4 w-4 text-blue-400" />
+
+        <span className="text-sm font-medium text-blue-300">
+          {badge}
+        </span>
+      </div>
+
+      {/* Title */}
+
+      <h2
+        className="
+          text-4xl
+          font-black
+          leading-tight
+          text-white
+
+          sm:text-5xl
+          lg:text-6xl
+        "
+      >
         {title}
 
-        {gradient && (
-          <span className="mt-2 block 'bg-gradient-to-r' from-blue-400 via-cyan-400 to-indigo-400 bg-clip-text text-transparent">
-            {gradient}
-          </span>
-        )}
+        <span className="block 'bg-gradient-to-r' from-blue-400 via-cyan-400 to-indigo-400 bg-clip-text text-transparent">
+          {gradient}
+        </span>
       </h2>
 
-      <p className="mt-8 text-base leading-8 text-slate-400 md:text-lg">
+      {/* Description */}
+
+      <p
+        className="
+          mt-8
+          text-base
+          leading-8
+          text-slate-400
+
+          md:text-lg
+        "
+      >
         {description}
       </p>
     </motion.div>

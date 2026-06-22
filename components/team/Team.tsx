@@ -1,165 +1,113 @@
 "use client";
 
-import Image from "next/image";
+import { useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
-import {
-  User,
-
-} from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { ArrowRight, Sparkles } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import GlassCard from "@/components/ui/GlassCard";
-import SectionHeading from "@/components/ui/SectionHeading";
 
-const team = [
-  {
-    name: "Vishwajeet Kumar",
-    role: "Founder & Creative Director",
-    image: "/team/placeholder.jpg",
-    bio: "Creative designer passionate about branding, UI/UX, and premium web experiences.",
-    skills: ["Branding", "UI/UX", "Web Design"],
-  },
-  {
-    name: "Rahul",
-    role: "Co-Founder",
-    image: "/team/placeholder.jpg",
-    bio: "Helping businesses grow through strategy and creative direction.",
-    skills: ["Strategy", "Marketing", "Branding"],
-  },
-  {
-    name: "Chitij",
-    role: "Lead Developer",
-    image: "/team/placeholder.jpg",
-    bio: "Building fast, responsive and scalable websites.",
-    skills: ["Next.js", "React", "TypeScript"],
-  },
-  {
-    name: "Aman A",
-    role: "Head of Editing",
-    image: "/team/placeholder.jpg",
-    bio: "Creating engaging visual content for digital platforms.",
-    skills: ["Editing", "Motion", "Content"],
-  },
-];
+import TeamCard from "./TeamCard";
+import TeamModal from "./TeamModal";
+import { teamMembers, TeamMember } from "./team-data";
 
 export default function Team() {
+  const [selectedMember, setSelectedMember] =
+    useState<TeamMember | null>(null);
+
   return (
-    <section id="team" className="bg-[#08111f] px-6 py-28 text-white">
-      <div className="mx-auto max-w-7xl">
+    <section
+      id="team"
+      className="relative overflow-hidden py-20 md:py-28 lg:py-36"
+    >
+      {/* Background */}
 
-        <SectionHeading
-          badge="Our Team"
-          title="Meet The Creative Minds"
-          description="A passionate team of designers, developers and creators building exceptional digital experiences."
-        />
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute left-1/2 top-0 'h-[28rem] w-[28rem]' -translate-x-1/2 rounded-full bg-blue-500/10 blur-[180px]" />
+      </div>
 
-        <div className="mt-20 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-          {team.map((member, index) => (
-            <motion.div
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+
+        {/* Header */}
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mx-auto max-w-3xl text-center"
+        >
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-4 py-2 backdrop-blur-xl">
+            <Sparkles className="h-4 w-4 text-blue-400" />
+
+            <span className="text-sm font-medium text-blue-300">
+              Meet The Team
+            </span>
+          </div>
+
+          <h2 className="text-4xl font-black leading-tight text-white sm:text-5xl lg:text-6xl">
+            Creative Minds Behind
+
+            <span className="block ,bg-gradient-to-r, from-blue-400 via-cyan-400 to-indigo-400 bg-clip-text text-transparent">
+              Every Great Experience
+            </span>
+          </h2>
+
+          <p className="mt-8 text-base leading-8 text-slate-400 md:text-lg">
+            Designers, developers and strategists working together to
+            transform ambitious ideas into world-class digital products.
+          </p>
+        </motion.div>
+
+        {/* Grid */}
+
+        <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
+
+          {teamMembers.map((member, index) => (
+            <div
               key={member.name}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              whileHover={{ y: -10 }}
+              onClick={() => setSelectedMember(member)}
+              className="cursor-pointer"
             >
-              <GlassCard className="overflow-hidden">
-
-                <div className="relative h-80 overflow-hidden">
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    fill
-                    className="object-cover transition duration-500 hover:scale-110"
-                  />
-                </div>
-
-                <div className="p-6">
-
-                  <h3 className="text-2xl font-bold">
-                    {member.name}
-                  </h3>
-
-                  <p className="mt-2 text-blue-400">
-                    {member.role}
-                  </p>
-
-                  <div className="mt-5 flex gap-3">
-                    <Button size="icon" variant="outline">
-                      <User size={18} />
-                    </Button>
-
-                    <Button size="icon" variant="outline">
-                      <User size={18}  />
-                    </Button>
-                  </div>
-
-                  <Dialog>
-
-                    <DialogTrigger asChild>
-                      <Button className="mt-6 w-full">
-                        View Profile
-                      </Button>
-                    </DialogTrigger>
-
-                    <DialogContent className="border-white/10 bg-[#0B1120] text-white">
-
-                      <DialogHeader>
-
-                        <DialogTitle>
-                          {member.name}
-                        </DialogTitle>
-
-                        <DialogDescription className="text-slate-400">
-                          {member.role}
-                        </DialogDescription>
-
-                      </DialogHeader>
-
-                      <div className="relative mx-auto h-56 w-56 overflow-hidden rounded-2xl">
-                        <Image
-                          src={member.image}
-                          alt={member.name}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-
-                      <p className="text-slate-300">
-                        {member.bio}
-                      </p>
-
-                      <div className="flex flex-wrap gap-3">
-                        {member.skills.map((skill) => (
-                          <span
-                            key={skill}
-                            className="rounded-full bg-blue-500/20 px-4 py-2 text-sm text-blue-400"
-                          >
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
-
-                    </DialogContent>
-
-                  </Dialog>
-
-                </div>
-
-              </GlassCard>
-            </motion.div>
+              <TeamCard
+                {...member}
+                index={index}
+              />
+            </div>
           ))}
+
         </div>
 
+        {/* CTA */}
+
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 }}
+          className="mt-16 flex justify-center"
+        >
+          <Button
+            asChild
+            size="lg"
+            className="group rounded-full bg-blue-600 px-8 hover:bg-blue-500"
+          >
+            <Link href="#contact">
+              Work With Us
+
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
+          </Button>
+        </motion.div>
+
       </div>
+
+      {/* Modal */}
+
+      <TeamModal
+        member={selectedMember}
+        onClose={() => setSelectedMember(null)}
+      />
     </section>
   );
 }
