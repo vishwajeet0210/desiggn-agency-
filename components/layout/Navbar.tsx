@@ -101,12 +101,17 @@ export default function Navbar() {
 
           {/* CTA */}
 
-          <Link
-            href="#contact"
-            className="hidden rounded-full bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-blue-500 lg:block"
-          >
-            Start Project
-          </Link>
+          <button
+  onClick={() => {
+    document.getElementById("contact")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }}
+  className="hidden rounded-full bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-blue-500 lg:block"
+>
+  Start Project
+</button>
 
           {/* Mobile Button */}
 
@@ -149,13 +154,21 @@ export default function Navbar() {
                 </Link>
               ))}
 
-              <Link
-                href="#contact"
-                onClick={() => setOpen(false)}
-                className="mt-10 rounded-full bg-blue-600 px-8 py-4 text-center text-lg font-semibold text-white"
-              >
-                Start Project
-              </Link>
+             <button
+  onClick={() => {
+    setOpen(false);
+
+    setTimeout(() => {
+      document.getElementById("contact")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 300);
+  }}
+  className="mt-10 rounded-full bg-blue-600 px-8 py-4 text-center text-lg font-semibold text-white"
+>
+  Start Project
+</button>
 
             </div>
           </motion.div>
