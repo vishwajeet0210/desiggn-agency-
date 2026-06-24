@@ -13,12 +13,17 @@ export default function HomePage() {
     <>
       <Navbar />
 
-      <main className="relative overflow-x-hidden">
+      <main className="overflow-x-hidden">
         <Hero />
+
         <About />
+
         <Services />
+
         <Portfolio />
+
         <Team />
+
         <Contact />
       </main>
 
